@@ -1,0 +1,18 @@
+{
+  "name": "mooiesite-dropbox",
+  "description": "Mooiesite Dropbox Plugin for http://mooiesite.nl/",
+  "license": "Proprietary",
+  "authors": [
+    "Nile Suan"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
