@@ -2,49 +2,49 @@
 /**
  * Mooiesite Dropbox Userhooks
  *
- * @since NEXT
+ * @since 1.0.0
  * @package Mooiesite Dropbox
  */
 
 /**
  * Mooiesite Dropbox Userhooks.
  *
- * @since NEXT
+ * @since 1.0.0
  */
 class MD_Userhooks {
 	/**
 	 * Parent plugin class
 	 *
 	 * @var   class
-	 * @since NEXT
+	 * @since 1.0.0
 	 */
 	protected $plugin = null;
 
 	/**
 	 * Path of the clients folder
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $clientsdir;
 
 	/**
 	 * Slug of the page that lists the files
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $listfilepageslug = 'files';
 
 	/**
 	 * Title of the page that lists the files
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $listfilepagetitle = 'List Files';
 
 	/**
 	 * Constructor
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param  object $plugin Main plugin object.
 	 * @return void
 	 */
@@ -64,7 +64,7 @@ class MD_Userhooks {
 
 	/**
 	 * Create list files page if it doesn't exist
-	 * @since NEXT
+	 * @since 1.0.0
 	 * @return void
 	 */
 	public function createpage() {
@@ -86,7 +86,7 @@ class MD_Userhooks {
 	/**
 	 * Initiate our hooks
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function hooks() {
@@ -96,7 +96,7 @@ class MD_Userhooks {
 
 	/**
 	 * Create user directory upon user registration
-	 * @since NEXT
+	 * @since 1.0.0
 	 * @param  int $user_id
 	 * @return void
 	 */
@@ -108,7 +108,7 @@ class MD_Userhooks {
 
 	/**
 	 * Change the page template if the page matches the one that lists files
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param  object $template wWrdpress template object
 	 * @return object
 	 */

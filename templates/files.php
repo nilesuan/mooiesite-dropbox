@@ -3,7 +3,7 @@
  * The template for displaying files
  *
  * This is the template that displays all files of the client folder.
- * @since NEXT
+ * @since 1.0.0
  */
 
 get_header(); ?>

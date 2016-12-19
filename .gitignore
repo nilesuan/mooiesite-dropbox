@@ -1,0 +1,7 @@
+bin/
+node_modules/
+tests/
+bower.json
+Dockunit.json
+Gruntfile.js
+phpunit.xml

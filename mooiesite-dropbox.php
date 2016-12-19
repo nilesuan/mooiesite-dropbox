@@ -43,7 +43,7 @@
 /**
  * Autoloads files with classes when needed
  *
- * @since  NEXT
+ * @since  1.0.0
  * @param  string $class_name Name of the class being requested.
  * @return void
  */
@@ -64,7 +64,7 @@ spl_autoload_register( 'mooiesite_dropbox_autoload_classes' );
 /**
  * Main initiation class
  *
- * @since  NEXT
+ * @since  1.0.0
  */
 final class Mooiesite_Dropbox {
 
@@ -72,7 +72,7 @@ final class Mooiesite_Dropbox {
 	 * Current version
 	 *
 	 * @var  string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	const VERSION = '1.0.0';
 
@@ -80,7 +80,7 @@ final class Mooiesite_Dropbox {
 	 * URL of plugin directory
 	 *
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $url = '';
 
@@ -88,7 +88,7 @@ final class Mooiesite_Dropbox {
 	 * Path of plugin directory
 	 *
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $path = '';
 
@@ -96,7 +96,7 @@ final class Mooiesite_Dropbox {
 	 * Plugin basename
 	 *
 	 * @var string
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected $basename = '';
 
@@ -104,14 +104,14 @@ final class Mooiesite_Dropbox {
 	 * Singleton instance of plugin
 	 *
 	 * @var Mooiesite_Dropbox
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected static $single_instance = null;
 
 	/**
 	 * Instance of MD_Userhooks
 	 *
-	 * @since NEXT
+	 * @since 1.0.0
 	 * @var MD_Userhooks
 	 */
 	protected $userhooks;
@@ -119,7 +119,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Creates or returns an instance of this class.
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return Mooiesite_Dropbox A single instance of this class.
 	 */
 	public static function get_instance() {
@@ -133,7 +133,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Sets up our plugin
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 */
 	protected function __construct() {
 		$this->basename = plugin_basename( __FILE__ );
@@ -144,7 +144,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Attach other plugin classes to the base plugin class.
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function plugin_classes() {
@@ -154,7 +154,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Add hooks and filters
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function hooks() {
@@ -165,7 +165,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Activate the plugin
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function _activate() {
@@ -177,7 +177,7 @@ final class Mooiesite_Dropbox {
 	 * Deactivate the plugin
 	 * Uninstall routines should be in uninstall.php
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function _deactivate() {}
@@ -185,7 +185,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Init hooks
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function init() {
@@ -199,7 +199,7 @@ final class Mooiesite_Dropbox {
 	 * Check if the plugin meets requirements and
 	 * disable it if they are not present.
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return boolean result of meets_requirements
 	 */
 	public function check_requirements() {
@@ -220,7 +220,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Deactivates this plugin, hook this function on admin_init.
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function deactivate_me() {
@@ -235,7 +235,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Check that all plugin requirements are met
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return boolean True if requirements are met.
 	 */
 	public function meets_requirements() {
@@ -248,7 +248,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Adds a notice to the dashboard if the plugin requirements are not met
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function requirements_not_met_notice() {
@@ -261,7 +261,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Magic getter for our object.
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param string $field Field to get.
 	 * @throws Exception Throws an exception if the field is invalid.
 	 * @return mixed
@@ -282,7 +282,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Include a file from the includes directory
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param  string $filename Name of the file to be included.
 	 * @return bool   Result of include call.
 	 */
@@ -297,7 +297,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * This plugin's directory
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param  string $path (optional) appended path.
 	 * @return string       Directory and path
 	 */
@@ -310,7 +310,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * This plugin's url
 	 *
-	 * @since  NEXT
+	 * @since  1.0.0
 	 * @param  string $path (optional) appended path.
 	 * @return string       URL and path
 	 */
@@ -325,7 +325,7 @@ final class Mooiesite_Dropbox {
  * Grab the Mooiesite_Dropbox object and return it.
  * Wrapper for Mooiesite_Dropbox::get_instance()
  *
- * @since  NEXT
+ * @since  1.0.0
  * @return Mooiesite_Dropbox  Singleton instance of plugin class.
  */
 function mooiesite_dropbox() {
