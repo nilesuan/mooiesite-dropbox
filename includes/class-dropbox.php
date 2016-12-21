@@ -1,17 +1,17 @@
 <?php
 /**
- * Mooiesite Dropbox Userhooks
+ * Mooiesite Dropbox Dropbox
  *
  * @since NEXT
  * @package Mooiesite Dropbox
  */
 
 /**
- * Mooiesite Dropbox Userhooks.
+ * Mooiesite Dropbox Dropbox.
  *
  * @since NEXT
  */
-class MD_Userhooks {
+class MD_Dropbox {
 	/**
 	 * Parent plugin class
 	 *
@@ -19,6 +19,41 @@ class MD_Userhooks {
 	 * @since NEXT
 	 */
 	protected $plugin = null;
+
+	/**
+	 * The dropbox app object
+	 * @var object
+	 * @since  NEXT
+	 */
+	protected $dropboxapp;
+
+	/**
+	 * The dropbox controller object
+	 * @var object
+	 * @since  NEXT
+	 */
+	protected $dropbox;
+
+	/**
+	 * Dropbox app id
+	 * @var string
+	 * @since  NEXT
+	 */
+	protected $dropboxappid;
+
+	/**
+	 * Dropbox app secret
+	 * @var string
+	 * @since  NEXT
+	 */
+	protected $dropboxappsecret;
+
+	/**
+	 * Dropbox access token
+	 * @var string
+	 * @since  NEXT
+	 */
+	protected $dropboxaccesstoken;
 
 	/**
 	 * Path of the clients folder
@@ -48,18 +83,34 @@ class MD_Userhooks {
 	 * @param  object $plugin Main plugin object.
 	 * @return void
 	 */
-	public function __construct( $plugin ) {
+	public function __construct($plugin = null) {
+
 		$this->plugin = $plugin;
+
+		$this->dropboxappid = '1483l1k2n0jj31u';
+		$this->dropboxappsecret = 'uik27qnfwidz085';
+		$this->dropboxaccesstoken = 'yyEMmbjtTdcAAAAAAAAM_Jo2wcIq0i6Cy6qG4EpgSU3Sal4kfnly9dLEzVu8zMPD';
+		
+		// setup the dropbox api wrapper
+		$this->dropboxapp = new Kunnu\Dropbox\DropboxApp($this->dropboxappid, $this->dropboxappsecret, $this->dropboxaccesstoken);
+		$this->dropbox = new Kunnu\Dropbox\Dropbox($this->dropboxapp);
+
 		$this->init();
 		$this->createpage();
 		$this->hooks();
 	}
 
 	public function init() {
-    	$upload_dir = wp_upload_dir();
-    	$this->clientsdir = $upload_dir['basedir'] . '/clients/';
-    	if(!file_exists($this->clientsdir))
-    		wp_mkdir_p($this->clientsdir);
+
+		// check if the client folder exists create it if it doesn't exist
+		try {
+			$this->clientsdir = $this->dropbox->listFolder('/clients');
+		} catch (Exception $e) {
+			try {
+				$this->dropbox->delete('/clients');
+			} catch (Exception $e) { }
+			$this->clientsdir = $this->dropbox->createFolder('/clients');
+		}
 	}
 
 	/**
@@ -101,9 +152,16 @@ class MD_Userhooks {
 	 * @return void
 	 */
 	public function createuserdir($user_id) {
-    	$userdir = $this->clientsdir.$user_id;
-    	if(!file_exists($userdir))
-    		wp_mkdir_p($userdir);
+
+		// check if the user folder inside clients exists create it if it doesn't exist
+		try {
+			$this->dropbox->listFolder('/clients/'.$user_id);
+		} catch (Exception $e) {
+			try {
+				$this->dropbox->delete('/clients/'.$user_id);
+			} catch (Exception $e) { }
+			$this->dropbox->createFolder('/clients/'.$user_id);
+		}
 	}
 
 	/**
@@ -117,5 +175,22 @@ class MD_Userhooks {
 			return $this->plugin->path.'templates/'.$this->listfilepageslug.'.php';
 
 		return $template;
+	}
+
+	public function getuserfiles() {
+
+		$user_id = get_current_user_id();
+
+		// check if the client folder exists create it if it doesn't exist and list files
+		try {
+			return $this->dropbox->listFolder('/clients/'.$user_id);
+		} catch (Exception $e) {
+			try {
+				$this->dropbox->delete('/clients/'.$user_id);
+			} catch (Exception $e) { }
+			$this->dropbox->createFolder('/clients/'.$user_id);
+			return $this->dropbox->listFolder('/clients/'.$user_id);
+		}
+
 	}
 }

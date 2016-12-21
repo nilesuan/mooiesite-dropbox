@@ -12,18 +12,16 @@ get_header(); ?>
 	<main id="main" class="site-main" role="main">
 		<?php
 			// get directories
-			$currentuser = get_current_user_id();
-			$uploadsdir = wp_upload_dir();
-			$clientsdir = $uploadsdir['basedir'].'/clients/'.$currentuser.'/';
-			$files = array_diff(scandir($clientsdir), array('..', '.'));
+			$dropbox = new MD_Dropbox();
+			$userfiles = $dropbox->getuserfiles(); // list folder object
+			$files = $userfiles->getItems(); // files object
 
-			if(!file_exists($clientsdir)) {
-				echo 'Your client folder does not exist!';
-			} else if($files === null) {
-				echo 'You have no files inside your folder.';
+			if(count($files) === 0) {
+				echo 'Your folder is empty!';
 			} else {
 				foreach($files as $file) {
-					echo $file.'<br />';
+					echo $file->getName();
+					echo '<br />';
 				}
 			}
 		?>

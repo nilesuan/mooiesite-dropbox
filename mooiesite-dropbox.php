@@ -109,12 +109,12 @@ final class Mooiesite_Dropbox {
 	protected static $single_instance = null;
 
 	/**
-	 * Instance of MD_Userhooks
+	 * Instance of MD_Dropbox
 	 *
 	 * @since NEXT
-	 * @var MD_Userhooks
+	 * @var MD_Dropbox
 	 */
-	protected $userhooks;
+	protected $dropbox;
 
 	/**
 	 * Creates or returns an instance of this class.
@@ -148,7 +148,7 @@ final class Mooiesite_Dropbox {
 	 * @return void
 	 */
 	public function plugin_classes() {
-		$this->userhooks = new MD_Userhooks( $this );
+		$this->dropbox = new MD_Dropbox( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
@@ -190,6 +190,10 @@ final class Mooiesite_Dropbox {
 	 */
 	public function init() {
 		if ( $this->check_requirements() ) {
+
+			if(file_exists($this->path.'vendor/autoload.php'))
+				require $this->path.'vendor/autoload.php';
+
 			load_plugin_textdomain( 'mooiesite-dropbox', false, dirname( $this->basename ) . '/languages/' );
 			$this->plugin_classes();
 		}
@@ -239,6 +243,8 @@ final class Mooiesite_Dropbox {
 	 * @return boolean True if requirements are met.
 	 */
 	public function meets_requirements() {
+		if(!file_exists($this->path.'vendor/autoload.php'))
+			return false;
 		// Do checks for required classes / functions
 		// function_exists('') & class_exists('').
 		// We have met all requirements.
