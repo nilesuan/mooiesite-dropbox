@@ -3,7 +3,7 @@
  * Plugin Name: Mooiesite Dropbox
  * Plugin URI:  http://mooiesite.nl/
  * Description: Mooiesite Dropbox Plugin for http://mooiesite.nl/
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      Nile Suan
  * Author URI:  http://www.nilesuan.com
  * Donate link: http://mooiesite.nl/
@@ -14,7 +14,7 @@
  * @link http://mooiesite.nl/
  *
  * @package Mooiesite Dropbox
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 /**
@@ -43,7 +43,7 @@
 /**
  * Autoloads files with classes when needed
  *
- * @since  1.0.0
+ * @since  1.1.0
  * @param  string $class_name Name of the class being requested.
  * @return void
  */
@@ -64,7 +64,7 @@ spl_autoload_register( 'mooiesite_dropbox_autoload_classes' );
 /**
  * Main initiation class
  *
- * @since  1.0.0
+ * @since  1.1.0
  */
 final class Mooiesite_Dropbox {
 
@@ -72,15 +72,15 @@ final class Mooiesite_Dropbox {
 	 * Current version
 	 *
 	 * @var  string
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 
 	/**
 	 * URL of plugin directory
 	 *
 	 * @var string
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
 	protected $url = '';
 
@@ -88,7 +88,7 @@ final class Mooiesite_Dropbox {
 	 * Path of plugin directory
 	 *
 	 * @var string
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
 	protected $path = '';
 
@@ -96,7 +96,7 @@ final class Mooiesite_Dropbox {
 	 * Plugin basename
 	 *
 	 * @var string
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
 	protected $basename = '';
 
@@ -104,22 +104,22 @@ final class Mooiesite_Dropbox {
 	 * Singleton instance of plugin
 	 *
 	 * @var Mooiesite_Dropbox
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
 	protected static $single_instance = null;
 
 	/**
-	 * Instance of MD_Userhooks
+	 * Instance of MD_Dropbox
 	 *
-	 * @since 1.0.0
-	 * @var MD_Userhooks
+	 * @since 1.1.0
+	 * @var MD_Dropbox
 	 */
-	protected $userhooks;
+	protected $dropbox;
 
 	/**
 	 * Creates or returns an instance of this class.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return Mooiesite_Dropbox A single instance of this class.
 	 */
 	public static function get_instance() {
@@ -133,7 +133,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Sets up our plugin
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 */
 	protected function __construct() {
 		$this->basename = plugin_basename( __FILE__ );
@@ -144,17 +144,17 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Attach other plugin classes to the base plugin class.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function plugin_classes() {
-		$this->userhooks = new MD_Userhooks( $this );
+		$this->dropbox = new MD_Dropbox( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
 	 * Add hooks and filters
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function hooks() {
@@ -165,7 +165,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Activate the plugin
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function _activate() {
@@ -177,7 +177,7 @@ final class Mooiesite_Dropbox {
 	 * Deactivate the plugin
 	 * Uninstall routines should be in uninstall.php
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function _deactivate() {}
@@ -185,11 +185,15 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Init hooks
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function init() {
 		if ( $this->check_requirements() ) {
+
+			if(file_exists($this->path.'vendor/autoload.php'))
+				require $this->path.'vendor/autoload.php';
+
 			load_plugin_textdomain( 'mooiesite-dropbox', false, dirname( $this->basename ) . '/languages/' );
 			$this->plugin_classes();
 		}
@@ -199,7 +203,7 @@ final class Mooiesite_Dropbox {
 	 * Check if the plugin meets requirements and
 	 * disable it if they are not present.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return boolean result of meets_requirements
 	 */
 	public function check_requirements() {
@@ -220,7 +224,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Deactivates this plugin, hook this function on admin_init.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function deactivate_me() {
@@ -235,10 +239,12 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Check that all plugin requirements are met
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return boolean True if requirements are met.
 	 */
 	public function meets_requirements() {
+		if(!file_exists($this->path.'vendor/autoload.php'))
+			return false;
 		// Do checks for required classes / functions
 		// function_exists('') & class_exists('').
 		// We have met all requirements.
@@ -248,7 +254,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Adds a notice to the dashboard if the plugin requirements are not met
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @return void
 	 */
 	public function requirements_not_met_notice() {
@@ -261,7 +267,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Magic getter for our object.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @param string $field Field to get.
 	 * @throws Exception Throws an exception if the field is invalid.
 	 * @return mixed
@@ -282,7 +288,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * Include a file from the includes directory
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @param  string $filename Name of the file to be included.
 	 * @return bool   Result of include call.
 	 */
@@ -297,7 +303,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * This plugin's directory
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @param  string $path (optional) appended path.
 	 * @return string       Directory and path
 	 */
@@ -310,7 +316,7 @@ final class Mooiesite_Dropbox {
 	/**
 	 * This plugin's url
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @param  string $path (optional) appended path.
 	 * @return string       URL and path
 	 */
@@ -325,7 +331,7 @@ final class Mooiesite_Dropbox {
  * Grab the Mooiesite_Dropbox object and return it.
  * Wrapper for Mooiesite_Dropbox::get_instance()
  *
- * @since  1.0.0
+ * @since  1.1.0
  * @return Mooiesite_Dropbox  Singleton instance of plugin class.
  */
 function mooiesite_dropbox() {
